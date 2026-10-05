@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>AI Content Verifier </title>
+
+    <meta
+        name="description"
+        content="AI Content Verifier is an AI-powered media literacy and fake news detection tool."
+    >
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+            min-height: 100vh;
+            font-family:
+                Inter,
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at top left,
+                    #172033 0%,
+                    #080b12 45%,
+                    #030406 100%
+                );
+
+            color: #ffffff;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 40px 20px;
+        }
+
+
+        .container {
+            width: 100%;
+            max-width: 950px;
+        }
+
+
+        /* =========================
+           HEADER
+        ========================== */
+
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+
+        .logo {
+            display: inline-block;
+
+            font-size: 15px;
+            font-weight: 800;
+
+            letter-spacing: 5px;
+
+            color: #8ab4ff;
+
+            margin-bottom: 18px;
+        }
+
+
+        .header h1 {
+            font-size: clamp(42px, 7vw, 76px);
+
+            line-height: 1;
+
+            font-weight: 800;
+
+            letter-spacing: -3px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .header h1 span {
+            color: #8ab4ff;
+        }
+
+
+        .subtitle {
+            max-width: 680px;
+
+            margin: auto;
+
+            color: #aeb7c8;
+
+            font-size: 17px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =========================
+           MAIN CARD
+        ========================== */
+
+        .main-card {
+            background:
+                rgba(15, 19, 29, 0.92);
+
+            border: 1px solid
+                rgba(255, 255, 255, 0.09);
+
+            border-radius: 24px;
+
+            padding: 30px;
+
+            box-shadow:
+                0 30px 80px
+                rgba(0, 0, 0, 0.45);
+
+            backdrop-filter: blur(20px);
+        }
+
+
+        .label {
+            display: block;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+
+            color: #8ab4ff;
+
+            margin-bottom: 12px;
+        }
+
+
+        /* =========================
+           NEWS TEXTAREA
+        ========================== */
+
+        #news {
+            width: 100%;
+
+            min-height: 220px;
+
+            resize: vertical;
+
+            border-radius: 16px;
+
+            border: 1px solid
+                rgba(255, 255, 255, 0.12);
+
+            background: #080b12;
+
+            color: #ffffff;
+
+            padding: 20px;
+
+            font-size: 16px;
+
+            line-height: 1.7;
+
+            outline: none;
+
+            transition:
+                border-color 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+
+        #news::placeholder {
+            color: #697386;
+        }
+
+
+        #news:focus {
+            border-color: #6f9cff;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(111, 156, 255, 0.12);
+        }
+
+
+        /* =========================
+           BUTTONS
+        ========================== */
+
+        .button-row {
+            display: flex;
+
+            gap: 12px;
+
+            margin-top: 18px;
+
+            flex-wrap: wrap;
+        }
+
+
+        button {
+            border: none;
+
+            border-radius: 12px;
+
+            padding: 14px 22px;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition:
+                transform 0.2s ease,
+                opacity 0.2s ease,
+                background 0.2s ease;
+        }
+
+
+        #checkButton {
+            background: #ffffff;
+
+            color: #080b12;
+
+            flex: 1;
+        }
+
+
+        #checkButton:hover {
+            transform: translateY(-2px);
+
+            background: #dce7ff;
+        }
+
+
+        #checkButton:disabled {
+            opacity: 0.55;
+
+            cursor: not-allowed;
+
+            transform: none;
+        }
+
+
+        #exampleButton {
+            background: #171d2a;
+
+            color: #ffffff;
+
+            border: 1px solid
+                rgba(255, 255, 255, 0.1);
+        }
+
+
+        #exampleButton:hover {
+            background: #222b3d;
+
+            transform: translateY(-2px);
+        }
+
+
+        /* =========================
+           RESULT AREA
+        ========================== */
+
+        #result {
+            margin-top: 28px;
+        }
+
+
+        .result-card {
+            border-radius: 18px;
+
+            background: #0b1019;
+
+            border: 1px solid
+                rgba(255, 255, 255, 0.1);
+
+            padding: 25px;
+
+            animation: resultAppear 0.35s ease;
+        }
+
+
+        @keyframes resultAppear {
+
+            from {
+                opacity: 0;
+
+                transform:
+                    translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+            }
+
+        }
+
+
+        /* =========================
+           PREDICTION
+        ========================== */
+
+        .prediction {
+            font-size: 28px;
+
+            font-weight: 800;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .prediction.real {
+            color: #50e3a4;
+        }
+
+
+        .prediction.fake {
+            color: #ff6874;
+        }
+
+
+        .prediction.uncertain {
+            color: #ffc857;
+        }
+
+
+        .confidence {
+            color: #aeb7c8;
+
+            font-size: 16px;
+
+            margin-bottom: 25px;
+        }
+
+
+        .confidence strong {
+            color: #ffffff;
+
+            font-size: 19px;
+        }
+
+
+        /* =========================
+           EXPLANATION
+        ========================== */
+
+        .explanation {
+            padding: 20px;
+
+            border-radius: 14px;
+
+            background: #111722;
+
+            margin-bottom: 20px;
+        }
+
+
+        .explanation h3 {
+            color: #8ab4ff;
+
+            font-size: 15px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1.5px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .explanation p {
+            color: #d2d8e3;
+
+            line-height: 1.7;
+
+            font-size: 15px;
+        }
+
+
+        /* =========================
+           SOURCE
+        ========================== */
+
+        .source-box {
+            padding: 20px;
+
+            border-radius: 14px;
+
+            background: #0f1622;
+
+            border: 1px solid
+                rgba(138, 180, 255, 0.15);
+        }
+
+
+        .source-box h3 {
+            color: #8ab4ff;
+
+            font-size: 15px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1.5px;
+
+            margin-bottom: 10px;
+        }
+
+
+        .source-box p {
+            color: #d2d8e3;
+
+            margin-bottom: 14px;
+        }
+
+
+        .source-link {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            text-decoration: none;
+
+            color: #ffffff;
+
+            background: #1c2738;
+
+            border: 1px solid
+                rgba(255, 255, 255, 0.12);
+
+            padding: 11px 16px;
+
+            border-radius: 10px;
+
+            font-weight: 700;
+
+            transition:
+                background 0.2s ease,
+                transform 0.2s ease;
+        }
+
+
+        .source-link:hover {
+            background: #2a3a54;
+
+            transform: translateY(-2px);
+        }
+
+
+        /* =========================
+           LOADING
+        ========================== */
+
+        .loading-card {
+            text-align: center;
+        }
+
+
+        .loading-card .prediction {
+            color: #8ab4ff;
+        }
+
+
+        /* =========================
+           ERROR
+        ========================== */
+
+        .error-card {
+            border-color:
+                rgba(255, 80, 90, 0.35);
+        }
+
+
+        .error-card .prediction {
+            color: #ff6874;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================== */
+
+        .footer {
+            text-align: center;
+
+            margin-top: 25px;
+
+            color: #667085;
+
+            font-size: 13px;
+
+            line-height: 1.6;
+        }
+
+
+        .footer strong {
+            color: #8993a6;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================== */
+
+        @media (max-width: 650px) {
+
+            body {
+                padding: 25px 14px;
+            }
+
+
+            .header h1 {
+                font-size: 46px;
+
+                letter-spacing: -2px;
+            }
+
+
+            .subtitle {
+                font-size: 15px;
+            }
+
+
+            .main-card {
+                padding: 20px;
+
+                border-radius: 18px;
+            }
+
+
+            #news {
+                min-height: 190px;
+
+                font-size: 15px;
+            }
+
+
+            .button-row {
+                flex-direction: column;
+            }
+
+
+            #checkButton,
+            #exampleButton {
+                width: 100%;
+            }
+
+
+            .prediction {
+                font-size: 24px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <main class="container">
+
+
+        <!-- =========================
+             HEADER
+        ========================== -->
+
+        <header class="header">
+
+            <div class="logo">
+                AI Content Verifier
+            </div>
+
+            <h1>
+                Separate
+                <span>Signal</span>
+                From Noise.
+            </h1>
+
+            <p class="subtitle">
+                Paste a news article, headline or social-media
+                post. AI Content Verifier analyzes the claim and provides
+                an estimated credibility result using AI.
+            </p>
+
+        </header>
+
+
+        <!-- =========================
+             MAIN APPLICATION
+        ========================== -->
+
+        <section class="main-card">
+
+
+            <label
+                class="label"
+                for="news"
+            >
+                Enter News
+            </label>
+
+
+            <textarea
+                id="news"
+                name="news"
+                placeholder="Paste a news headline, article or social-media claim here..."
+                autocomplete="off"
+            ></textarea>
+
+
+            <div class="button-row">
+
+                <button
+                    id="checkButton"
+                    type="button"
+                >
+                    Analyze With AI
+                </button>
+
+
+                <button
+                    id="exampleButton"
+                    type="button"
+                >
+                    Try Example
+                </button>
+
+            </div>
+
+
+            <!--
+                IMPORTANT:
+                script.js will put the AI result here.
+            -->
+
+            <div id="result"></div>
+
+
+        </section>
+
+
+        <!-- =========================
+             FOOTER
+        ========================== -->
+
+        <footer class="footer">
+
+            <strong>AI Content Verifier</strong>
+            is an assistive media-literacy tool.
+
+            <br>
+
+            Its prediction is an AI estimate and should not
+            be treated as proof that a claim is true or false.
+
+        </footer>
+
+
+    </main>
+
+
+    <!-- =========================
+         EXAMPLE BUTTON SCRIPT
+    ========================== -->
+
+    <script>
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                const exampleButton =
+                    document.getElementById(
+                        "exampleButton"
+                    );
+
+                const newsInput =
+                    document.getElementById(
+                        "news"
+                    );
+
+
+                if (!exampleButton || !newsInput) {
+                    return;
+                }
+
+
+                exampleButton.addEventListener(
+                    "click",
+                    function () {
+
+                        newsInput.value =
+                            "Scientists announce that drinking two cups of coffee every morning permanently increases human intelligence by 50%, according to a new international study.";
+
+                        newsInput.focus();
+
+                    }
+                );
+
+            }
+        );
+
+    </script>
+
+
+    <!-- =========================
+         AI Content Verifier SCRIPT
+    ========================== -->
+
+    <script
+        src="{{ url_for('static', filename='script.js') }}"
+    ></script>
+
+
+</body>
+
+</html>
