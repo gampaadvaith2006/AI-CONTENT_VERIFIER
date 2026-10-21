@@ -39,6 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function checkNews() {
 
+        if (checkButton.disabled) return;
         const news = newsInput.value.trim();
 
         // Empty input
@@ -67,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
 
                 <div class="explanation">
-                    Verifying this claim with AI...
+                    Searching for matching news and assessing the claim...
                     <br><br>
                     Please wait.
                 </div>
@@ -212,7 +213,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 sourceHTML = `
                     <div class="source-box">
 
-                        <h3>Verified Source</h3>
+                        <h3>Related reporting</h3>
 
                         ${
                             sourceName
@@ -240,7 +241,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         <h3>Source</h3>
 
                         <p>
-                            No source link was provided by the AI.
+                            No matching source link was returned.
                         </p>
 
                     </div>
@@ -304,8 +305,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <div class="explanation">
                         Could not connect to the AI server.
                         <br><br>
-                        Make sure <strong>python app.py</strong>
-                        is running.
+                        Please try again in a moment. The service may be waking up.
                     </div>
 
                 </div>
