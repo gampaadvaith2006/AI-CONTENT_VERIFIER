@@ -1,5 +1,5 @@
 // ============================================
-// VERITAS AI - FRONTEND SCRIPT
+// AI Content Verifier - FRONTEND SCRIPT
 // ============================================
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Check that required HTML elements exist
     if (!newsInput || !result || !checkButton) {
-        console.error("VERITAS AI: Required HTML elements were not found.");
+        console.error("AI Content Verifier: Required HTML elements were not found.");
         return;
     }
 
@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
 
-            console.log("VERITAS AI result:", data);
+            console.log("AI Content Verifier result:", data);
 
 
             // Server error
@@ -292,7 +292,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         } catch (error) {
 
-            console.error("VERITAS AI error:", error);
+            console.error("AI Content Verifier error:", error);
 
 
             result.innerHTML = `
@@ -342,6 +342,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
-    console.log("VERITAS AI frontend loaded successfully.");
+    console.log("AI Content Verifier frontend loaded successfully.");
 
 });

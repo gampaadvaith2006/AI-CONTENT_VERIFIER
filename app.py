@@ -10,7 +10,7 @@ from flask import Flask, render_template, request, jsonify
 from dotenv import load_dotenv
 
 # ---------------------------------------------------------
-# VERITAS AI - FREE LIVE WEB VERIFICATION
+# AI Content Verifier - FREE LIVE WEB VERIFICATION
 # ---------------------------------------------------------
 
 load_dotenv()
@@ -135,7 +135,7 @@ def search_google_news(query):
         request = urllib.request.Request(
             rss_url,
             headers={
-                "User-Agent": "Mozilla/5.0 VERITAS-AI"
+                "User-Agent": "Mozilla/5.0 AI-Content-Verifier"
             }
         )
 
@@ -228,7 +228,7 @@ def create_search_queries(news):
 def verify_with_web(news):
 
     print("----------------------------------------")
-    print("VERITAS AI")
+    print("AI Content Verifier")
     print("Free live web verification started...")
     print("----------------------------------------")
 
@@ -442,7 +442,7 @@ Do not invent URLs.
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + OPENROUTER_API_KEY,
                 "HTTP-Referer": "http://127.0.0.1:5000",
-                "X-Title": "VERITAS AI"
+                "X-Title": "AI Content Verifier"
             },
             method="POST"
         )
@@ -630,7 +630,7 @@ def status():
 
     return jsonify({
         "status": "online",
-        "app": "VERITAS AI",
+        "app": "AI Content Verifier",
         "verification": "Live Web Search",
         "openrouter_available": bool(OPENROUTER_API_KEY),
         "time": datetime.now().isoformat()
@@ -644,7 +644,7 @@ def status():
 if __name__ == "__main__":
 
     print("----------------------------------------")
-    print(" VERITAS AI - Fake News Detector")
+    print(" AI Content Verifier - Fake News Detector")
     print("----------------------------------------")
 
     if OPENROUTER_API_KEY:
