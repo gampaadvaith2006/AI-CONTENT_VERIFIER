@@ -40,10 +40,10 @@ body > header, body > main { position: relative; z-index: 1; }
 .newspaper-columns h3{font:bold 16px/1.1 Georgia,serif;margin:10px 0}.newspaper-columns i{display:block;height:3px;margin:5px 0;background:repeating-linear-gradient(90deg,#5c5c4d99 0 11px,transparent 11px 13px,#62625288 13px 29px,transparent 29px 32px)}
 .newspaper-columns i:nth-child(3n){width:87%}.print-photo{height:115px;background:repeating-linear-gradient(135deg,#555c4f66 0 2px,transparent 2px 4px),linear-gradient(25deg,#555e4e 40%,#9b9c82 41%,#d1c9af 75%);border:4px double #777964;margin-bottom:12px}
 .newspaper-bottom{border-top:2px solid #545545;margin-top:25px;padding-top:9px;text-align:center;font:9px Georgia,serif;letter-spacing:2px}
-.newspaper-sheet.paper-one{--angle:-16deg;top:-170px;left:-170px;animation-delay:-3s}
-.newspaper-sheet.paper-two{--angle:14deg;top:-100px;left:calc(50% + 80px);animation-delay:-9s}
-.newspaper-sheet.paper-three{--angle:10deg;top:440px;left:-70px;animation-delay:-14s}
-.newspaper-sheet.paper-four{--angle:-12deg;top:470px;left:calc(50% + 180px);animation-delay:-6s}
-@keyframes paperDrift{to{transform:translate(12px,-18px) rotate(calc(var(--angle) + 2deg))}}
+.newspaper-sheet.paper-one{--angle:-16deg;--drift-x:64px;--drift-y:52px;--drift-tilt:4deg;top:-170px;left:-170px;animation-duration:12s;animation-delay:-3s}
+.newspaper-sheet.paper-two{--angle:14deg;--drift-x:-58px;--drift-y:68px;--drift-tilt:-4deg;top:-100px;left:calc(50% + 80px);animation-duration:15s;animation-delay:-9s}
+.newspaper-sheet.paper-three{--angle:10deg;--drift-x:52px;--drift-y:-64px;--drift-tilt:-3deg;top:440px;left:-70px;animation-duration:14s;animation-delay:-6s}
+.newspaper-sheet.paper-four{--angle:-12deg;--drift-x:-68px;--drift-y:-48px;--drift-tilt:4deg;top:470px;left:calc(50% + 180px);animation-duration:17s;animation-delay:-11s}
+@keyframes paperDrift{from{transform:translate(0,0) rotate(var(--angle))}to{transform:translate(var(--drift-x),var(--drift-y)) rotate(calc(var(--angle) + var(--drift-tilt)))}}
 @media(max-width:700px){.newspaper-sheet{width:370px;min-height:520px;padding:16px}.newspaper-masthead{font-size:29px}.newspaper-sheet h2{font-size:28px}.newspaper-sheet.paper-one{left:-220px;top:-100px}.newspaper-sheet.paper-two{left:48%;top:90px}.newspaper-sheet.paper-three{left:-170px;top:530px}.newspaper-sheet.paper-four{left:55%;top:700px}.newspaper-background::after{background:#080e1799}.newspaper-columns{gap:8px}.print-photo{height:90px}}
 @media(prefers-reduced-motion:reduce){.newspaper-sheet{animation:none!important}}
